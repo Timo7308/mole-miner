@@ -43,7 +43,7 @@ void draw() {
   background(0);
   if (gameState == STARTED) {
     map.draw(0, 0);
-    fill(0, 100);
+    fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
