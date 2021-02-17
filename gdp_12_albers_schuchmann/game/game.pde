@@ -1,9 +1,11 @@
 final String gameOverMessage = "game over";
 final String wonMessage = "you won";
 final String startMessage = "press <space> to start";
+final String introductionMessage = "collect as much gold as you can\nwatch out for deep holes";
 final String goldMessageSuffix = " gold";
 
 PFont defaultFont;
+PImage treausureImg;
 
 final int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
 int gameState = STARTED;
@@ -14,13 +16,15 @@ int goldCount;
 
 void setup() {
   size(600, 750); 
-  defaultFont = createFont("FiraCode-Bold.ttf", 32);
+  defaultFont = createFont("FiraCode-Bold.ttf", 28);
   textFont(defaultFont);
+  treausureImg = loadImage("images/T.png");
   
   map = new Map("level_01.map");
 }
 
 void startGame() {
+  map = new Map("level_01.map");
   player = new Player(100, 159);
   goldCount = 0;
   gameState = RUNNING;
@@ -50,13 +54,14 @@ void keyReleased() {
 
 void draw() {
   background(0);
+
   if (gameState == STARTED) {
     map.draw(0, 0);
     fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
-    text(startMessage, width/2, height/2);
+    text(startMessage + "\n" + introductionMessage, width/2, height/2);
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
@@ -66,15 +71,13 @@ void draw() {
   } else if (gameState == LOST) {
     fill(255);
     textAlign(CENTER);
-    text(gameOverMessage, width/2, height/2);
-    text(startMessage, width/2, height/2+50);
+    text(gameOverMessage + "\n" + startMessage, width/2, height/2);
     chaoticFilter();
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
-    text(wonMessage, width/2, height/2);
-    text(goldCount + goldMessageSuffix, width/2, height/2+50);
-    text(startMessage, width/2, height/2+100);
+    text(wonMessage + "\n" + goldCount + goldMessageSuffix + "\n" + startMessage, width/2, height/2);
+    image(treausureImg, width/2-25, height/2-140);
   }
 }
 
