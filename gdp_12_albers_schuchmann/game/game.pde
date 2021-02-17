@@ -1,10 +1,16 @@
-int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
+final String gameOverMessage = "game over";
+final String wonMessage = "you won";
+final String startMessage = "press <space> to start";
+final String goldMessageSuffix = " gold";
+
+PFont defaultFont;
+
+final int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
 int gameState = STARTED;
 
 Map map;
 Player player;
-
-PFont defaultFont;
+int goldCount;
 
 void setup() {
   size(600, 750); 
@@ -15,13 +21,16 @@ void setup() {
 }
 
 void startGame() {
-  player = new Player(100, 160);
+  player = new Player(100, 159);
+  goldCount = 0;
   gameState = RUNNING;
 }
 
 void keyPressed() {
   if (gameState == STARTED || gameState == LOST || gameState == WON) {
-    startGame();
+    if (key == ' ') {
+      startGame();
+    }
   } else if (gameState == RUNNING) {
     if (keyCode == RIGHT) {
       player.moveRight();
@@ -47,19 +56,25 @@ void draw() {
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
-    text("press any key to start", width/2, height/2);
+    text(startMessage, width/2, height/2);
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
+    fill(255);
+    textAlign(RIGHT);
+    text(goldCount + goldMessageSuffix, width-10, 40);
   } else if (gameState == LOST) {
     fill(255);
     textAlign(CENTER);
-    text("game over", width/2, height/2);
+    text(gameOverMessage, width/2, height/2);
+    text(startMessage, width/2, height/2+50);
     chaoticFilter();
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
-    text("you won", width/2, height/2);
+    text(wonMessage, width/2, height/2);
+    text(goldCount + goldMessageSuffix, width/2, height/2+50);
+    text(startMessage, width/2, height/2+100);
   }
 }
 
