@@ -4,6 +4,8 @@ final String startMessage = "press <space> to start";
 final String introductionMessage = "collect as much gold as you can\nwatch out for deep holes";
 final String goldMessageSuffix = " gold";
 
+boolean button = false; 
+
 PFont defaultFont;
 PImage treausureImg;
 
@@ -66,8 +68,6 @@ void draw() {
  textSize(55);
     text("Mole Miner", 297, height/2 -200);
 
-
-
     fill(#FFD700);
     strokeWeight(2);
     rect(222, height/2+34, 152, 55);
@@ -107,17 +107,6 @@ void draw() {
     text("unten", 122, height/2+363);
 
 
-
-
-
-
-
-
-
-
-
-
-
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
@@ -146,13 +135,6 @@ void mousePressed() {
     startGame();
   }
 }
-
-
-
-
-
-
-
 
 void chaoticFilter() {
   loadPixels();
