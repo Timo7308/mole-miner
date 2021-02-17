@@ -31,7 +31,7 @@ void startGame() {
 }
 
 void keyPressed() {
-  if (gameState == STARTED || gameState == LOST || gameState == WON) {
+  if (gameState == LOST || gameState == WON) {
     if (key == ' ') {
       startGame();
     }
@@ -62,6 +62,62 @@ void draw() {
     fill(255);
     textAlign(CENTER);
     text(startMessage + "\n" + introductionMessage, width/2, height/2);
+
+ textSize(55);
+    text("Mole Miner", 297, height/2 -200);
+
+
+
+    fill(#FFD700);
+    strokeWeight(2);
+    rect(222, height/2+34, 152, 55);
+    fill(0);
+    textSize(25);
+    text("Starten", 297, height/2+70);
+
+
+    // Steuerung
+    fill(#FFD700);
+    rect(10, height/2+245, 200, 125);
+    fill(0);
+    textSize(14);
+    text("Steuerung:", 60, height/2+264);
+    
+    // Pfeiltasten und Text
+    fill(255);
+    rect(98, height/2+291, 20, 20);
+    rect(98, height/2+317, 20, 20);
+    rect(73, height/2+317, 20, 20);
+    rect(124, height/2+317, 20, 20);
+    textSize(13);
+    fill(0);
+    text("↑", 108, height/2+305);
+    text("->", 135, height/2+331);
+    text("<-", 83, height/2+331);
+    text("↓", 108, height/2+332);
+    line(108, height/2+278, 108, height/2+287);
+    line(118, height/2+277, 108, height/2+277);
+    line(150, height/2+327, 160, height/2+327);
+    line(67, height/2+327, 58, height/2+327);
+    line(108, height/2+352, 108, height/2+343);
+    textSize(10);
+    text("oben", 142, height/2+281);
+    text("rechts", 185, height/2+331);
+    text("links", 37, height/2+330);
+    text("unten", 122, height/2+363);
+
+
+
+
+
+
+
+
+
+
+
+
+
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
@@ -80,6 +136,23 @@ void draw() {
     image(treausureImg, width/2-25, height/2-140);
   }
 }
+void mousePressed() {
+
+  // Koordinaten des Startbuttons
+  if (mouseX>222 && mouseX < 222 + 152 && mouseY >409 && mouseY < 409 + 55) {
+    button = true;
+  }
+  if (button && gameState == STARTED) {
+    startGame();
+  }
+}
+
+
+
+
+
+
+
 
 void chaoticFilter() {
   loadPixels();
