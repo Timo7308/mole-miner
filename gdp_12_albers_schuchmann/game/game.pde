@@ -1,7 +1,7 @@
 final String gameOverMessage = "game over";
 final String wonMessage = "you won";
 final String startMessage = "press <space> to start";
-final String introductionMessage = "collect as much gold as you can\nwatch out for deep holes";
+final String introductionMessage = "Sammle so viel Gold wie du kannst,\n aber halte dich von tiefen Löchern fern";
 final String goldMessageSuffix = " gold";
 
 boolean button = false; 
@@ -63,7 +63,8 @@ void draw() {
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
-    text(startMessage + "\n" + introductionMessage, width/2, height/2);
+    textSize(15);
+    text(introductionMessage, width/2, height/2-70);
 
  textSize(55);
     text("Mole Miner", 297, height/2 -200);
@@ -112,6 +113,7 @@ void draw() {
     player.draw();
     fill(255);
     textAlign(RIGHT);
+    textSize(25);
     text(goldCount + goldMessageSuffix, width-10, 40);
   } else if (gameState == LOST) {
     fill(255);
