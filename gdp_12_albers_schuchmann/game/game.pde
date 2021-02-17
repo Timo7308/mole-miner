@@ -7,7 +7,7 @@ final String goldMessageSuffix = " gold";
 boolean button = false; 
 
 PFont defaultFont;
-PImage treausureImg;
+PImage treausureImg, houseImg;
 
 final int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
 int gameState = STARTED;
@@ -21,7 +21,7 @@ void setup() {
   defaultFont = createFont("FiraCode-Bold.ttf", 28);
   textFont(defaultFont);
   treausureImg = loadImage("images/T.png");
-  
+  houseImg = loadImage("images/house.png");
   map = new Map("level_01.map");
 }
 
@@ -60,6 +60,7 @@ void draw() {
   if (gameState == STARTED) {
     map.draw(0, 0);
     fill(0, 150);
+    image(houseImg, 370, 46, 180, 180);
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
@@ -115,6 +116,7 @@ void draw() {
     textAlign(RIGHT);
     textSize(25);
     text(goldCount + goldMessageSuffix, width-10, 40);
+    image(houseImg, 370, 46, 180, 180);
   } else if (gameState == LOST) {
     fill(255);
     textAlign(CENTER);
