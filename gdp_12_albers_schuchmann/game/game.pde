@@ -119,7 +119,7 @@ void draw() {
     fill(255);
     textAlign(CENTER);
     text(gameOverMessage + "\n" + startMessage, width/2, height/2);
-    chaoticFilter();
+    //chaoticFilter();
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
