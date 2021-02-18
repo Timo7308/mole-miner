@@ -21,10 +21,7 @@ class FallingTileFilter {
     for (int i = 0; i < chaoticFilterStartPositions.length; i++) {
       PVector start = chaoticFilterStartPositions[i];
       PVector target = chaoticFilterTargetPositions[i];
-      
-      target.y += 2 / frameRate;
-      if (target.y >= height-size) target.y = 0;
-      
+
       for (int x = 0; x < size; x++) {
         for (int y = 0; y < size; y++) {
           int index = (int)(start.x+x + (start.y+y)*width);
@@ -37,6 +34,5 @@ class FallingTileFilter {
     }
   
     updatePixels();
-    filter(POSTERIZE, 4);
   }
 }
