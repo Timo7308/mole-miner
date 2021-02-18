@@ -1,23 +1,23 @@
-class Player {
-  final private int size = 40;
-  
-  private PVector position;
-  private PVector velocity;
-  
-  private boolean digging = false;
+class Player extends MovingObject {
+  final static private int size = 40;
   
   private PImage img;
   
+  private DirtParticle[] dirtParticles = new DirtParticle[60];
+  private int dirtParticleIndex = 0;
+  private ArrayList<DirtHole> dirtHoles = new ArrayList<DirtHole>();
+  
   Player(float x, float y) {
-    this.position = new PVector(x, y);
-    this.velocity = new PVector(0, 0);
+    super(size, size, new PVector(x, y));
     this.img = loadImage("images/mole.png");
   }
   
   void stop() {
-    //digging = false;
     velocity.x = 0;
-    //velocity.y = 0;
+    
+    if (isDigging()) {
+      velocity.y = 0;
+    }
   }
   
   void moveRight() {
@@ -28,60 +28,71 @@ class Player {
     velocity.x = -200;
   }
   
-  void dig() {
-    digging = true;
-    velocity.y = 40;
+  void moveDown() {
+    velocity.y = 80;
   }
   
-  void updatePosition() {
-    // Apply gravity if the player is in the sky or a hole
-    if (map.testTileInRect(position.x, position.y, size, size, "SE")) {
-      velocity.y += 30; // gravity
-    }
-    
-    PVector nextPosition = new PVector();
-    nextPosition.x = position.x + velocity.x / frameRate;
-    nextPosition.y = position.y + velocity.y / frameRate;
-    
-    //map.findClosestTileInRect(nextPosition.x, nextPosition.y, size, size, "DEGLRST");
-    
-    //map.at(nextPosition.x, nextPosition.y)
-    
-    if (map.testTileInRect(nextPosition.x, position.y, size, size, "R") ||
-        nextPosition.x < 0 || nextPosition.x >= width) {
-      velocity.x = 0;
-      nextPosition.x = position.x;
-    }
-    
-    if (!digging && map.testTileInRect(nextPosition.x, nextPosition.y, size, size, "DGRT") ||
-        digging && map.testTileInRect(nextPosition.x, nextPosition.y, size, size, "R")) {
-      velocity.y = 0;
-      nextPosition.y = position.y;
-      digging = false;
-    }
-    
-    if (velocity.y > 700 || nextPosition.y > height) {
-      gameState = LOST;
-      return;
-    }
-    
-    Map.TileReference closestGoldTile = map.findClosestTileInRect(nextPosition.x, nextPosition.y, size, size, "G");
-    if (closestGoldTile != null) {
-      goldCount++;
-      map.set(closestGoldTile.x, closestGoldTile.y, 'D');
-    }
-    
-    Map.TileReference closestTreasureTile = map.findClosestTileInRect(nextPosition.x, nextPosition.y, size, size, "T");
-    if (closestTreasureTile != null) {
-      gameState = WON;
-    }
-    
-    position = nextPosition;
+  void moveUp() {
+    velocity.y = -60;
   }
   
   void draw() {
     updatePosition();
+
+    for (DirtParticle dirtParticle : dirtParticles) {
+      if (dirtParticle == null) continue;
+      dirtParticle.draw();
+    }
+    
+    for (DirtHole dirtHole : dirtHoles) {
+      dirtHole.draw();
+    }
     
     image(img, position.x, position.y, size, size);
+  }
+  
+  protected void updatePosition() {
+    super.updatePosition();
+    
+    Map.TileReference currentTile = getCurrentTile();
+    
+    if (currentTile.tile == 'T') {
+      gameState = WON;
+    }
+    
+    if (velocity.y > 700 || position.y > height) {
+      gameState = LOST;
+      return;
+    }
+    
+    if (currentTile.tile == 'G') {
+      goldCount++;
+      map.set(currentTile.x, currentTile.y, 'D');
+    }
+    
+    if (isDigging()) {
+      addDirtParticle();
+      
+      if ("DG".indexOf(currentTile.tile) != -1 && random(100) > 60) {
+        addDirtHole(currentTile);
+      }
+      
+    }
+  }
+  
+  protected void addDirtParticle() {
+    dirtParticles[dirtParticleIndex++] = new DirtParticle(new PVector(position.x + objectWidth/2, position.y + objectHeight/2));
+    if (dirtParticleIndex >= dirtParticles.length) dirtParticleIndex = 0;
+  }
+  
+  protected void addDirtHole(Map.TileReference tile) {
+    dirtHoles.add(new DirtHole(tile));
+  }
+  
+  private boolean isDigging() {
+    Map.TileReference currentTile = getCurrentTile();
+    boolean isDiggingInDirt = (velocity.x != 0 || velocity.y != 0) && "DGT".indexOf(currentTile.tile) != -1;
+    boolean isDiggingThroughLawn = velocity.y > 0 && currentTile.tile == 'L';
+    return isDiggingInDirt || isDiggingThroughLawn;
   }
 }
