@@ -15,6 +15,8 @@ int gameState = STARTED;
 Map map;
 Player player;
 int goldCount;
+int mapY;
+FallingTileFilter fallingTileFilter;
 
 void setup() {
   size(600, 750); 
@@ -29,6 +31,8 @@ void startGame() {
   map = new Map("level_01.map");
   player = new Player(100, 159);
   goldCount = 0;
+  mapY = 0;
+  fallingTileFilter = new FallingTileFilter();
   gameState = RUNNING;
 }
 
@@ -118,10 +122,15 @@ void draw() {
     text(goldCount + goldMessageSuffix, width-10, 40);
     image(houseImg, 370, 46, 180, 180);
   } else if (gameState == LOST) {
+    mapY += 1000 / frameRate;
+    map.draw(0, mapY);
+    fallingTileFilter.apply();
+    player.draw();
+    
     fill(255);
     textAlign(CENTER);
     text(gameOverMessage + "\n" + restartMessage, width/2, height/2);
-    chaoticFilter();
+    
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
@@ -129,8 +138,8 @@ void draw() {
     image(treausureImg, width/2-25, height/2-140);
   }
 }
-void mousePressed() {
 
+void mousePressed() {
   // Koordinaten des Startbuttons
   if (mouseX>222 && mouseX < 222 + 152 && mouseY >409 && mouseY < 409 + 55) {
     button = true;
@@ -138,34 +147,4 @@ void mousePressed() {
   if (button && gameState == STARTED) {
     startGame();
   }
-}
-
-void chaoticFilter() {
-  loadPixels();
-
-  int m = millis();
-
-  for (int i = 0; i < 100; i++) {
-    //int xStart = (int)random(width/50)*50;
-    //int yStart = (int)random(height/50)*50;
-    //int xTarget = (int)random(width/50)*50;
-    //int yTarget = (int)random(height/50)*50;
-    int xStart = (int)(noise(m)*width);
-    int yStart = (int)(noise(m+i)*height);
-    int xTarget = (int)(noise(m+i)*width);
-    int yTarget = (int)(noise(m+2*i)*height);
-
-    for (int x = 0; x < 50; x++) {
-      for (int y = 0; y < 50; y++) {
-        int index = xStart+x + (yStart+y)*width;
-        int targetIndex = xTarget+x + (yTarget+y)*width;
-        color value = pixels[index];
-        color targetValue = pixels[targetIndex];
-        color newValue = color(red(targetValue)*0.5+red(value)*0.3, green(targetValue)*0.5+green(value)*0.3, blue(targetValue)*0.5+blue(value)*0.3);
-        pixels[targetIndex] = newValue;
-      }
-    }
-  }
-
-  updatePixels();
 }
