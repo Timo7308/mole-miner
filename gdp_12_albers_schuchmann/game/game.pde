@@ -69,7 +69,7 @@ void draw() {
     textSize(15);
     text(introductionMessage, width/2, height/2-70);
 
- textSize(55);
+    textSize(55);
     text("Mole Miner", 297, height/2 -200);
 
     fill(#FFD700);
@@ -86,7 +86,7 @@ void draw() {
     fill(0);
     textSize(14);
     text("Steuerung:", 60, height/2+264);
-    
+
     // Pfeiltasten und Text
     fill(255);
     rect(98, height/2+291, 20, 20);
@@ -109,8 +109,6 @@ void draw() {
     text("rechts", 185, height/2+331);
     text("links", 37, height/2+330);
     text("unten", 122, height/2+363);
-
-
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
@@ -144,9 +142,9 @@ void mousePressed() {
 
 void chaoticFilter() {
   loadPixels();
-  
+
   int m = millis();
-  
+
   for (int i = 0; i < 100; i++) {
     //int xStart = (int)random(width/50)*50;
     //int yStart = (int)random(height/50)*50;
@@ -156,7 +154,7 @@ void chaoticFilter() {
     int yStart = (int)(noise(m+i)*height);
     int xTarget = (int)(noise(m+i)*width);
     int yTarget = (int)(noise(m+2*i)*height);
-    
+
     for (int x = 0; x < 50; x++) {
       for (int y = 0; y < 50; y++) {
         int index = xStart+x + (yStart+y)*width;
@@ -168,6 +166,6 @@ void chaoticFilter() {
       }
     }
   }
-  
+
   updatePixels();
 }
