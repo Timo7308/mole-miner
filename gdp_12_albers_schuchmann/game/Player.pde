@@ -56,6 +56,11 @@ class Player extends MovingObject {
     
     Map.TileReference currentTile = getCurrentTile();
     
+    if (currentTile == null) {
+      println("warning: unable to obtain current tile");
+      return;
+    }
+    
     if (currentTile.tile == 'T') {
       gameState = WON;
     }

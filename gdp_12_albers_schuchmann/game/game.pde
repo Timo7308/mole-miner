@@ -1,8 +1,8 @@
-final String gameOverMessage = "game over";
-final String wonMessage = "you won";
-final String startMessage = "press <space> to start";
+final String gameOverMessage = "Game over";
+final String wonMessage = "Gewonnen!";
+final String restartMessage = "Drücke die <Leertaste> zum Starten";
 final String introductionMessage = "Sammle so viel Gold wie du kannst,\n aber halte dich von tiefen Löchern fern";
-final String goldMessageSuffix = " gold";
+final String goldMessageSuffix = " Gold";
 
 boolean button = false; 
 
@@ -122,12 +122,12 @@ void draw() {
   } else if (gameState == LOST) {
     fill(255);
     textAlign(CENTER);
-    text(gameOverMessage + "\n" + startMessage, width/2, height/2);
+    text(gameOverMessage + "\n" + restartMessage, width/2, height/2);
     chaoticFilter();
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
-    text(wonMessage + "\n" + goldCount + goldMessageSuffix + "\n" + startMessage, width/2, height/2);
+    text(wonMessage + "\n" + goldCount + goldMessageSuffix + "\n" + restartMessage, width/2, height/2);
     image(treausureImg, width/2-25, height/2-140);
   }
 }
