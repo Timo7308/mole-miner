@@ -122,9 +122,12 @@ void draw() {
     text(goldCount + goldMessageSuffix, width-10, 40);
     image(houseImg, 370, 46, 180, 180);
   } else if (gameState == LOST) {
-    mapY += 1000 / frameRate;
-    map.draw(0, mapY);
-    fallingTileFilter.apply();
+    if (mapY < height) {
+      mapY += 1000 / frameRate;
+      map.draw(0, mapY);
+      fallingTileFilter.apply();
+    }
+    
     player.draw();
     
     fill(255);
