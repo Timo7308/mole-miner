@@ -66,7 +66,7 @@ void draw() {
   if (gameState == STARTED) {
     map.draw(0, 0);
     fill(0, 150);
-    image(houseImg, 370, 46, 180, 180);
+    image(houseImg, 370, 42, 180, 180);
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
@@ -120,7 +120,7 @@ void draw() {
     textAlign(RIGHT);
     textSize(25);
     text(goldCount + goldMessageSuffix, width-10, 40);
-    image(houseImg, 370, 46, 180, 180);
+    image(houseImg, 370, 42, 180, 180);
   } else if (gameState == LOST) {
     if (mapY < height) {
       mapY += 1000 / frameRate;
