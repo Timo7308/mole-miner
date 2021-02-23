@@ -1,8 +1,9 @@
 final String gameOverMessage = "Game over";
 final String wonMessage = "Gewonnen!";
 final String restartMessage = "Drücke die <Leertaste> zum Starten";
-final String introductionMessage = "Sammle so viel Gold wie du kannst,\n aber halte dich von tiefen Löchern fern";
-final String goldMessageSuffix = " Gold";
+final String introductionMessage = "Sammle so viel Gold und Diamanten wie du kannst,\n aber halte dich von tiefen Löchern, Fledermäusen \n und Skeletten fern";
+final String goldMessageSuffix = "Gold:";
+final String diamondMessageSuffix = "Diamanten:";
 
 boolean button = false; 
 
@@ -15,6 +16,7 @@ int gameState = STARTED;
 Map map;
 Player player;
 int goldCount;
+int diamondCount;
 int mapY;
 FallingTileFilter fallingTileFilter;
 
@@ -31,6 +33,7 @@ void startGame() {
   map = new Map("level_01.map");
   player = new Player(100, 159);
   goldCount = 0;
+  diamondCount = 0;
   mapY = 0;
   fallingTileFilter = new FallingTileFilter();
   gameState = RUNNING;
@@ -119,7 +122,9 @@ void draw() {
     fill(255);
     textAlign(RIGHT);
     textSize(25);
-    text(goldCount + goldMessageSuffix, width-10, 40);
+    text(goldMessageSuffix + goldCount, width-10, 40);
+    textSize(20);
+    text(diamondMessageSuffix + diamondCount, width-10, 70);
     image(houseImg, 370, 42, 180, 180);
   } else if (gameState == LOST) {
     if (mapY < height) {
@@ -137,7 +142,7 @@ void draw() {
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
-    text(wonMessage + "\n" + goldCount + goldMessageSuffix + "\n" + restartMessage, width/2, height/2);
+    text(wonMessage + "\n"+"\n" + goldMessageSuffix + goldCount + "\n"  + diamondMessageSuffix + diamondCount + "\n" + "\n" +"\n" + restartMessage, width/2, height/2);
     image(treausureImg, width/2-25, height/2-140);
   }
 }
