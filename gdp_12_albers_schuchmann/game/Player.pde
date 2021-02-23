@@ -74,6 +74,10 @@ class Player extends MovingObject {
       goldCount++;
       map.set(currentTile.x, currentTile.y, 'D');
     }
+    if (currentTile.tile == 'F') {
+      diamondCount++;
+      map.set(currentTile.x, currentTile.y, 'D');
+    }
     
     if (isDigging()) {
       addDirtParticle();
