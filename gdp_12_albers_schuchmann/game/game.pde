@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 final String gameOverMessage = "Game over";
 final String wonMessage = "Gewonnen!";
 final String restartMessage = "Drücke die <Leertaste> zum Starten";
@@ -20,6 +22,10 @@ int diamondCount;
 int mapY;
 FallingTileFilter fallingTileFilter;
 
+SoundFile mainTheme01;
+SoundFile mainTheme02;
+SoundFile mainTheme03;
+
 void setup() {
   size(600, 750); 
   defaultFont = createFont("FiraCode-Bold.ttf", 28);
@@ -27,6 +33,11 @@ void setup() {
   treausureImg = loadImage("images/T.png");
   houseImg = loadImage("images/house.png");
   map = new Map("level_01.map");
+  
+  mainTheme01 = new SoundFile(this, "main-theme-01.mp3");
+  mainTheme02 = new SoundFile(this, "main-theme-02.mp3");
+  
+  mainTheme01.loop();
 }
 
 void startGame() {
@@ -36,6 +47,8 @@ void startGame() {
   diamondCount = 0;
   mapY = 0;
   fallingTileFilter = new FallingTileFilter();
+  mainTheme01.stop();
+  mainTheme02.loop();
   gameState = RUNNING;
 }
 
