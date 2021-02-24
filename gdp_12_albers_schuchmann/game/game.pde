@@ -2,8 +2,8 @@ final String gameOverMessage = "Game over";
 final String wonMessage = "Gewonnen!";
 final String restartMessage = "Drücke die <Leertaste> zum Starten";
 final String introductionMessage = "Sammle so viel Gold und Diamanten wie du kannst,\n aber halte dich von tiefen Löchern, Fledermäusen \n und Skeletten fern";
-final String goldMessageSuffix = "Gold:";
-final String diamondMessageSuffix = "Diamanten:";
+final String goldMessageSuffix = "Gold: ";
+final String diamondMessageSuffix = "Diamanten: ";
 
 boolean button = false; 
 

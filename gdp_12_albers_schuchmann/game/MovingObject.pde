@@ -17,11 +17,6 @@ abstract class MovingObject {
   protected void updatePosition() {
     Map.TileReference currentTile = getCurrentTile();
     
-    if (currentTile == null) {
-      println("warning: unable to obtain current tile");
-      return;
-    }
-    
     // Apply gravity if the object is in the sky or a hole
     if ("SE".indexOf(currentTile.tile) != -1) {
       velocity.y += GRAVITY;
@@ -42,6 +37,8 @@ abstract class MovingObject {
       nextPosition.y = position.y;
     }
 
+    nextPosition.x = constrain(nextPosition.x, 0, width-1);
+    nextPosition.y = constrain(nextPosition.y, 0, height-1);
     position = nextPosition;
   }
   
