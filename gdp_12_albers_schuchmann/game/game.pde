@@ -44,7 +44,7 @@ void setup() {
 void startGame() {
   map = new Map("level_01.map");
   player = new Player(100, 159);
-  oponent = new Oponent(150,259);
+  oponent = new Oponent(150,255);
   goldCount = 0;
   diamondCount = 0;
   mapY = 0;
