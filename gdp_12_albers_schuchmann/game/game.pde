@@ -17,7 +17,7 @@ int gameState = STARTED;
 
 Map map;
 Player player;
-Oponent oponent;
+Bat bat;
 int goldCount;
 int diamondCount;
 int mapY;
@@ -44,7 +44,7 @@ void setup() {
 void startGame() {
   map = new Map("level_01.map");
   player = new Player(100, 159);
-  oponent = new Oponent(150,255);
+  bat = new Bat(150, 305);
   goldCount = 0;
   diamondCount = 0;
   mapY = 0;
@@ -134,7 +134,7 @@ void draw() {
   } else if (gameState == RUNNING) {
     map.draw(0, 0);
     player.draw();
-    oponent.draw();
+    bat.draw();
     fill(255);
     textAlign(RIGHT);
     textSize(25);

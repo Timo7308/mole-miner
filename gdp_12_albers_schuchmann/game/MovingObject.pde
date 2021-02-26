@@ -14,6 +14,12 @@ abstract class MovingObject {
     this.velocity = new PVector(0, 0);
   }
   
+  boolean collidesWith(MovingObject m2) {
+    boolean collidesHorizontal = position.x+objectWidth >= m2.position.x && position.x <= m2.position.x+m2.objectWidth;
+    boolean collidesVertical = position.y+objectHeight >= m2.position.y && position.y <= m2.position.y+m2.objectHeight;
+    return collidesHorizontal && collidesVertical;
+  }
+  
   protected void updatePosition() {
     Map.TileReference currentTile = getCurrentTile();
     

@@ -63,9 +63,17 @@ class Player extends MovingObject {
     
     if (currentTile.tile == 'T') {
       gameState = WON;
+      return;
     }
     
     if (velocity.y > 700 || position.y > height) {
+      stop();
+      gameState = LOST;
+      return;
+    }
+    
+    if (collidesWith(bat)) {
+      stop();
       gameState = LOST;
       return;
     }
@@ -73,8 +81,7 @@ class Player extends MovingObject {
     if (currentTile.tile == 'G') {
       goldCount++;
       map.set(currentTile.x, currentTile.y, 'D');
-    }
-    if (currentTile.tile == 'F') {
+    } else if (currentTile.tile == 'F') {
       diamondCount++;
       map.set(currentTile.x, currentTile.y, 'D');
     }
