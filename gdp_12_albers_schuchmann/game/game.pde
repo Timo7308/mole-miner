@@ -7,25 +7,29 @@ final String introductionMessage = "Sammle so viel Gold und Diamanten wie du kan
 final String goldMessageSuffix = "Gold: ";
 final String diamondMessageSuffix = "Diamanten: ";
 
-boolean button = false; 
-
 PFont defaultFont;
 PImage treausureImg, houseImg;
-
-final int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
-int gameState = STARTED;
-
-Map map;
-Player player;
-Bat bat;
-int goldCount;
-int diamondCount;
-int mapY;
-FallingTileFilter fallingTileFilter;
 
 SoundFile mainTheme01;
 SoundFile mainTheme02;
 SoundFile mainTheme03;
+
+FallingTileFilter fallingTileFilter;
+
+final int STARTED = 0, RUNNING = 1, LOST = 2, WON = 3;
+int gameState = STARTED;
+
+int gameStartedTime;
+int nextBatTime;
+
+Map map;
+int mapY;
+
+int goldCount;
+int diamondCount;
+
+Player player;
+ArrayList<Opponent> opponents;
 
 void setup() {
   size(600, 750); 
@@ -34,23 +38,27 @@ void setup() {
   treausureImg = loadImage("images/T.png");
   houseImg = loadImage("images/house.png");
   map = new Map("level_01.map");
-  
+
+  fallingTileFilter = new FallingTileFilter();
+
   mainTheme01 = new SoundFile(this, "main-theme-01.mp3");
   mainTheme02 = new SoundFile(this, "main-theme-02.mp3");
-  
+
   mainTheme01.loop();
 }
 
 void startGame() {
   map = new Map("level_01.map");
   player = new Player(100, 159);
-  bat = new Bat(150, 305);
+  opponents = new ArrayList<Opponent>();
+
   goldCount = 0;
   diamondCount = 0;
   mapY = 0;
-  fallingTileFilter = new FallingTileFilter();
+
   mainTheme01.stop();
   mainTheme02.loop();
+  gameStartedTime = millis();
   gameState = RUNNING;
 }
 
@@ -101,7 +109,6 @@ void draw() {
     textSize(25);
     text("Starten", 297, height/2+70);
 
-
     // Steuerung
     fill(#FFD700);
     rect(10, height/2+245, 200, 125);
@@ -132,9 +139,13 @@ void draw() {
     text("links", 37, height/2+330);
     text("unten", 122, height/2+363);
   } else if (gameState == RUNNING) {
+    updateObjects();
+
     map.draw(0, 0);
     player.draw();
-    bat.draw();
+
+    for (Opponent opponent : opponents) opponent.draw();
+
     fill(255);
     textAlign(RIGHT);
     textSize(25);
@@ -148,13 +159,12 @@ void draw() {
       map.draw(0, mapY);
       fallingTileFilter.apply();
     }
-    
+
     player.draw();
-    
+
     fill(255);
     textAlign(CENTER);
     text(gameOverMessage + "\n" + restartMessage, width/2, height/2);
-    
   } else if (gameState == WON) {
     fill(255);
     textAlign(CENTER);
@@ -165,10 +175,68 @@ void draw() {
 
 void mousePressed() {
   // Koordinaten des Startbuttons
-  if (mouseX>222 && mouseX < 222 + 152 && mouseY >409 && mouseY < 409 + 55) {
-    button = true;
-  }
-  if (button && gameState == STARTED) {
+  boolean startButtonPressed = mouseX > 222 && mouseX < 222 + 152 && mouseY > 409 && mouseY < 409 + 55;
+  if (startButtonPressed && gameState == STARTED) {
     startGame();
   }
+}
+
+void updateObjects() {
+  int currentTime = millis();
+
+  if (nextBatTime < gameStartedTime) scheduleNewBat();
+
+  if (nextBatTime <= currentTime) {
+    spawnNewBat();
+    scheduleNewBat();
+  }
+}
+
+void spawnNewBat() {
+  // Obtain the position of all dirt tiles
+  ArrayList<PVector> dirtTiles = getPositionsOfTilesWithType('D');
+
+  // Select a random dirt tile in the first three quartes of all dirt tiles.
+  // This prevents opponents from spawning in the lower part of the window,
+  // which would make the game too hard.
+  int randomDirtTileIndex = (int)random(dirtTiles.size()/4*3); 
+  PVector randomDirtTile = dirtTiles.get(randomDirtTileIndex);
+
+  int margin = (map.tileSize - Opponent.size) / 2;
+
+  Opponent o = fiftyFifty()
+    ? new Bat(randomDirtTile.x+margin, randomDirtTile.y+margin)
+    : new Skeleton(randomDirtTile.x+margin, randomDirtTile.y+margin);
+  opponents.add(o);
+
+  // Remove opponents if there are too many
+  while (opponents.size() > 2) {
+    opponents.remove(0);
+  }
+}
+
+void scheduleNewBat() {
+  nextBatTime = millis() + (int)random(3000, 6000);
+}
+
+ArrayList<PVector> getPositionsOfTilesWithType(char type) {
+  ArrayList<PVector> tiles = new ArrayList<PVector>();
+
+  for (int y = 0; y < map.map.length; y++) {
+    String row = map.map[y];
+
+    for (int x = 0; x < row.length(); x++) {
+      char tile = row.charAt(x);
+
+      if (tile == 'D') {
+        tiles.add(new PVector(x * map.tileSize, y * map.tileSize));
+      }
+    }
+  }
+
+  return tiles;
+}
+
+boolean fiftyFifty() {
+  return random(1) >= 0.5;
 }

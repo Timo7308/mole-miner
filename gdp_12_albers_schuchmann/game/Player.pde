@@ -72,10 +72,12 @@ class Player extends MovingObject {
       return;
     }
     
-    if (collidesWith(bat)) {
-      stop();
-      gameState = LOST;
-      return;
+    for (Opponent opponent : opponents) {
+      if (collidesWith(opponent)) {
+        stop();
+        gameState = LOST;
+        return;
+      }
     }
     
     if (currentTile.tile == 'G') {
