@@ -91,8 +91,9 @@ void draw() {
 
   if (gameState == STARTED) {
     map.draw(0, 0);
-    fill(0, 150);
     image(houseImg, 370, 42, 180, 180);
+    
+    fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER);
@@ -142,8 +143,8 @@ void draw() {
     updateObjects();
 
     map.draw(0, 0);
+    image(houseImg, 370, 42, 180, 180);
     player.draw();
-
     for (Opponent opponent : opponents) opponent.draw();
 
     fill(255);
@@ -152,7 +153,7 @@ void draw() {
     text(goldMessageSuffix + goldCount, width-10, 40);
     textSize(20);
     text(diamondMessageSuffix + diamondCount, width-10, 70);
-    image(houseImg, 370, 42, 180, 180);
+    
   } else if (gameState == LOST) {
     if (mapY < height) {
       mapY += 1000 / frameRate;
