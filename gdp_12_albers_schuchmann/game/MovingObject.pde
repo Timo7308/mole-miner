@@ -61,6 +61,6 @@ abstract class MovingObject {
   }
   
   protected Map.TileReference getCurrentTile() {
-    return map.findClosestTileInRect(position.x, position.y, objectWidth, objectHeight, "DEFGLRST");
+    return map.findClosestTileInRect(position.x, position.y, objectWidth, objectHeight, "DEFGLPRST");
   }
 }
