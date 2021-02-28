@@ -60,6 +60,12 @@ class Player extends MovingObject {
       println("warning: unable to obtain current tile");
       return;
     }
+
+    if (currentTile.tile == 'P') {
+       map = new Map("level_02.map");
+       player = new Player(300, 359);
+       return;
+    }
     
     if (currentTile.tile == 'T') {
       gameState = WON;
