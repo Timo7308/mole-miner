@@ -1,3 +1,6 @@
+/**
+ * A pixel-based filter, which let's the currently drawn image "fall down" as tiles.
+ */
 class FallingTileFilter {
   private final int CHAOTIC_FILTER_ELEMENT_COUNT = 50;
   private PVector[] chaoticFilterStartPositions = new PVector[CHAOTIC_FILTER_ELEMENT_COUNT];

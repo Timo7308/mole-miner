@@ -1,3 +1,6 @@
+/**
+ * Represents the player.
+ */
 class Player extends MovingObject {
   final static private int size = 40;
   
@@ -7,6 +10,12 @@ class Player extends MovingObject {
   private int dirtParticleIndex = 0;
   private ArrayList<DirtHole> dirtHoles = new ArrayList<DirtHole>();
   
+  /**
+   * Creates a new player with the given position.
+   *
+   * @param x the x coordinate of the position
+   * @param y the y coordinate of the position
+   */
   Player(float x, float y) {
     super(size, size, new PVector(x, y));
     this.img = loadImage("images/mole.png");

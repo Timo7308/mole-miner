@@ -1,7 +1,16 @@
+/**
+ * Represents a skeleton.
+ */
 class Skeleton extends Opponent {
   private PImage imgLeft;
   private PImage imgRight;
 
+  /**
+   * Creates a new skeleton with the given position.
+   *
+   * @param x the x coordinate of the position
+   * @param y the y coordinate of the position
+   */
   Skeleton(float x, float y) {
     super(x, y);
 

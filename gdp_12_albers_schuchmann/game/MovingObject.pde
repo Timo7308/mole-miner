@@ -1,3 +1,6 @@
+/**
+ * Represents an abstract moviung object
+ */
 abstract class MovingObject {
   final protected int GRAVITY = 30;
   

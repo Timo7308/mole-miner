@@ -1,8 +1,16 @@
+/**
+ * Represents a particle of dirt, produced by digging.
+ */
 class DirtParticle extends MovingObject {
   final protected int GRAVITY = 0;
   
   int startTime = millis();
   
+  /**
+   * Creates a new dirt particle with the given position.
+   *
+   * @param position the initial position of the dirt particle
+   */
   DirtParticle(PVector position) {
     super(0, 0, position);
     velocity = new PVector(random(-200, 200), random(30, 50));

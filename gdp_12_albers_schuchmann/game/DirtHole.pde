@@ -1,7 +1,15 @@
+/**
+ * Represents a hole in the dirt, produced by digging.
+ */
 class DirtHole {
   private PVector position;
   private int size;
   
+  /**
+   * Creates a new dirt hole for the given tile
+   *
+   * @param tile the tile to randomly position the hole on
+   */
   DirtHole(Map.TileReference tile) {
     size = (int)random(2, 26);
     this.position = new PVector(

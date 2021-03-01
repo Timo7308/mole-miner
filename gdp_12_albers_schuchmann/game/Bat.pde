@@ -1,6 +1,15 @@
+/**
+ * Represents a bat.
+ */
 class Bat extends Opponent {
   private PImage img;
 
+  /**
+   * Creates a new bat with the given position.
+   *
+   * @param x the x coordinate of the position
+   * @param y the y coordinate of the position
+   */
   Bat(float x, float y) {
     super(x, y);
     
