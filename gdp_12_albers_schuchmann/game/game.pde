@@ -10,9 +10,7 @@ final String diamondMessageSuffix = "Diamanten: ";
 PFont defaultFont;
 PImage treausureImg, houseImg;
 
-SoundFile mainTheme01;
-SoundFile mainTheme02;
-SoundFile mainTheme03;
+Resources resources;
 
 FallingTileFilter fallingTileFilter;
 
@@ -40,32 +38,45 @@ void setup() {
   map = new Map("level_01.map");
 
   fallingTileFilter = new FallingTileFilter();
+  resources = new Resources(this);
 
-  mainTheme01 = new SoundFile(this, "main-theme-01.mp3");
-  mainTheme02 = new SoundFile(this, "main-theme-02.mp3");
-
-  mainTheme01.loop();
+  resources.mainTheme01.loop();
 }
 
-void startGame() {
-  map = new Map("level_01.map");
-  player = new Player(100, 159);
-  opponents = new ArrayList<Opponent>();
+void changeState(int state) {
+  if (state == gameState) return;
+  
+  switch (state) {
+  case WON:
+    resources.mainTheme02.stop();
+    resources.won.play();
+    break;
+  case LOST:
+    resources.mainTheme02.stop();
+    resources.lost.play();
+    break;
+  case RUNNING:
+    map = new Map("level_01.map");
+    player = new Player(100, 159);
+    opponents = new ArrayList<Opponent>();
 
-  goldCount = 0;
-  diamondCount = 0;
-  mapY = 0;
+    goldCount = 0;
+    diamondCount = 0;
+    mapY = 0;
 
-  mainTheme01.stop();
-  mainTheme02.loop();
-  gameStartedTime = millis();
-  gameState = RUNNING;
+    resources.mainTheme01.stop();
+    resources.mainTheme02.loop();
+    gameStartedTime = millis();
+    gameState = RUNNING;
+  }
+
+  gameState = state;
 }
 
 void keyPressed() {
   if (gameState == LOST || gameState == WON) {
     if (key == ' ') {
-      startGame();
+      changeState(RUNNING);
     }
   } else if (gameState == RUNNING) {
     if (keyCode == RIGHT) {
@@ -92,7 +103,7 @@ void draw() {
   if (gameState == STARTED) {
     map.draw(0, 0);
     image(houseImg, 370, 42, 180, 180);
-    
+
     fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
@@ -153,7 +164,6 @@ void draw() {
     text(goldMessageSuffix + goldCount, width-10, 40);
     textSize(20);
     text(diamondMessageSuffix + diamondCount, width-10, 70);
-    
   } else if (gameState == LOST) {
     if (mapY < height) {
       mapY += 1000 / frameRate;
@@ -178,7 +188,7 @@ void mousePressed() {
   // Koordinaten des Startbuttons
   boolean startButtonPressed = mouseX > 222 && mouseX < 222 + 152 && mouseY > 409 && mouseY < 409 + 55;
   if (startButtonPressed && gameState == STARTED) {
-    startGame();
+    changeState(RUNNING);
   }
 }
 

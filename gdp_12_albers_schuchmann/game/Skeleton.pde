@@ -2,8 +2,8 @@
  * Represents a skeleton.
  */
 class Skeleton extends Opponent {
-  private PImage imgLeft;
-  private PImage imgRight;
+  private PImage imgLeft = resources.skeletonLeft;
+  private PImage imgRight = resources.skeletonRight;
 
   /**
    * Creates a new skeleton with the given position.
@@ -13,9 +13,6 @@ class Skeleton extends Opponent {
    */
   Skeleton(float x, float y) {
     super(x, y);
-
-    imgLeft = loadImage("images/skeleton-left.png");
-    imgRight = loadImage("images/skeleton-right.png");
     
     velocity.x = fiftyFifty() ? 70 : -70;
   }

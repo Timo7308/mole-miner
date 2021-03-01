@@ -4,7 +4,7 @@
 class Player extends MovingObject {
   final static private int size = 40;
   
-  private PImage img;
+  private PImage img = resources.mole;
   
   private DirtParticle[] dirtParticles = new DirtParticle[60];
   private int dirtParticleIndex = 0;
@@ -18,7 +18,6 @@ class Player extends MovingObject {
    */
   Player(float x, float y) {
     super(size, size, new PVector(x, y));
-    this.img = loadImage("images/mole.png");
   }
   
   void stop() {
@@ -77,20 +76,20 @@ class Player extends MovingObject {
     }
     
     if (currentTile.tile == 'T') {
-      gameState = WON;
+      changeState(WON);
       return;
     }
     
     if (velocity.y > 700 || position.y > height) {
       stop();
-      gameState = LOST;
+      changeState(LOST);
       return;
     }
     
     for (Opponent opponent : opponents) {
       if (collidesWith(opponent)) {
         stop();
-        gameState = LOST;
+        changeState(LOST);
         return;
       }
     }
@@ -98,9 +97,11 @@ class Player extends MovingObject {
     if (currentTile.tile == 'G') {
       goldCount++;
       map.set(currentTile.x, currentTile.y, 'D');
+      resources.goldCollected.play();
     } else if (currentTile.tile == 'F') {
       diamondCount++;
       map.set(currentTile.x, currentTile.y, 'D');
+      resources.diamantCollected.play();
     }
     
     if (isDigging()) {

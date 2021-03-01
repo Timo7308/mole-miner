@@ -2,8 +2,8 @@
  * Represents a bat.
  */
 class Bat extends Opponent {
-  private PImage img;
-
+  private PImage img = resources.bat;
+  
   /**
    * Creates a new bat with the given position.
    *
@@ -12,10 +12,7 @@ class Bat extends Opponent {
    */
   Bat(float x, float y) {
     super(x, y);
-    
     canFly = true;
-    img = loadImage("images/bat.gif");
-    
     velocity.x = fiftyFifty() ? 70 : -70;
   }
   
