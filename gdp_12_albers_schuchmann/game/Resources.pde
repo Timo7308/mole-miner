@@ -5,7 +5,7 @@ class Resources {
   PImage mole = loadImage("images/mole.png");
   PImage skeletonLeft = loadImage("images/skeleton-left.png");
   PImage skeletonRight = loadImage("images/skeleton-right.png");
-  PImage bat = loadImage("images/bat.gif");
+  PImage bat = loadImage("images/bat.png");
   
   SoundFile mainTheme01;
   SoundFile mainTheme02;

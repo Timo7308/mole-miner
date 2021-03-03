@@ -56,12 +56,12 @@ abstract class MovingObject {
       velocity.y += GRAVITY;
     }
     
-    PVector nextPosition = new PVector();
-    nextPosition.x = position.x + velocity.x / frameRate;
-    nextPosition.y = position.y + velocity.y / frameRate;
+    PVector nextPosition = new PVector(
+      position.x + velocity.x / frameRate,
+      position.y + velocity.y / frameRate);
     
     if (map.testTileInRect(nextPosition.x, position.y, objectWidth, objectHeight, "R") ||
-        nextPosition.x < 0 || nextPosition.x >= width-1) {
+        nextPosition.x < 0 || nextPosition.x >= width-objectWidth) {
       onHitEndX(nextPosition);
     }
     

@@ -25,8 +25,9 @@ abstract class Opponent extends MovingObject {
    *        call. This can be updated in this method.
    */
   protected void onHitEndX(PVector nextPosition) {
-    float curVelocityX = velocity.x;
-    super.onHitEndX(nextPosition);
-    velocity.x = -curVelocityX;
+    //float curVelocityX = velocity.x;
+    //super.onHitEndX(nextPosition);
+    velocity.x = -velocity.x;
+    nextPosition.x = position.x + velocity.x / frameRate;
   }
 }
