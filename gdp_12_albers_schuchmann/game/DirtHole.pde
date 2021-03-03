@@ -19,6 +19,9 @@ class DirtHole {
     
   }
   
+  /**
+   * Draws the hole.
+   */
   void draw() {
     noStroke();
     fill(0, 50);

@@ -17,6 +17,9 @@ class DirtParticle extends MovingObject {
     objectWidth = objectHeight = (int)random(3, 10);
   }
   
+  /**
+   * Draws the particle of dirt.
+   */
   void draw() {
     super.updatePosition();
     

@@ -17,6 +17,9 @@ class Skeleton extends Opponent {
     velocity.x = fiftyFifty() ? 70 : -70;
   }
   
+  /**
+   * Draws the skeleton
+   */
   void draw() {
     updatePosition();
     image(velocity.x > 0 ? imgRight : imgLeft, position.x, position.y, Opponent.size, Opponent.size);

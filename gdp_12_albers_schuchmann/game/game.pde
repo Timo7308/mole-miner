@@ -168,7 +168,7 @@ void draw() {
     if (mapY < height) {
       mapY += 1000 / frameRate;
       map.draw(0, mapY);
-      fallingTileFilter.apply();
+      fallingTileFilter.draw();
     }
 
     player.draw();

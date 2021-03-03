@@ -16,6 +16,14 @@ abstract class Opponent extends MovingObject {
     velocity.x = fiftyFifty() ? 70 : -70;
   }
   
+  /**
+   * Called by updatePosition() when the object hit an end on the X axis.
+   *
+   * This overriden method flips the direction of movement after the opponent hit the X axis.
+   *
+   * @param nextPosition the position the object will have after the current updatePosition()
+   *        call. This can be updated in this method.
+   */
   protected void onHitEndX(PVector nextPosition) {
     float curVelocityX = velocity.x;
     super.onHitEndX(nextPosition);

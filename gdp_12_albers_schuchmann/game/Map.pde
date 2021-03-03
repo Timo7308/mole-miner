@@ -5,7 +5,6 @@ class Map
 {  
   int mode = CORNER;
 
-
   // Constructor: tmptileSize is the width/height of one tile in pixel
   Map( int tmptileSize ) {
     tileSize = tmptileSize;

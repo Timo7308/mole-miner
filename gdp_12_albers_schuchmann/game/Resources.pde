@@ -1,3 +1,6 @@
+/**
+ * Holds references to static resources like images and sounds.
+ */
 class Resources {
   PImage mole = loadImage("images/mole.png");
   PImage skeletonLeft = loadImage("images/skeleton-left.png");
@@ -11,6 +14,11 @@ class Resources {
   SoundFile won;
   SoundFile lost;
 
+  /**
+   * Creates a new instance.
+   *
+   * @param parent the parent used for sound files, usually `this`
+   */
   Resources(PApplet parent) {
     mainTheme01 = new SoundFile(parent, "sounds/main-theme-01.mp3");
     mainTheme02 = new SoundFile(parent, "sounds/main-theme-02.mp3");

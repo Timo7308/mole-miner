@@ -6,7 +6,7 @@ class Player extends MovingObject {
   
   private PImage img = resources.mole;
   
-  private DirtParticle[] dirtParticles = new DirtParticle[60];
+  private DirtParticle[] dirtParticles = new DirtParticle[30];
   private int dirtParticleIndex = 0;
   private ArrayList<DirtHole> dirtHoles = new ArrayList<DirtHole>();
   
@@ -20,6 +20,9 @@ class Player extends MovingObject {
     super(size, size, new PVector(x, y));
   }
   
+  /**
+   * Stops the movement of the player.
+   */
   void stop() {
     velocity.x = 0;
     
@@ -28,22 +31,37 @@ class Player extends MovingObject {
     }
   }
   
+  /**
+   * Starts moving the player to the right.
+   */
   void moveRight() {
     velocity.x = 200;
   }
   
+  /**
+   * Starts moving the player to the left.
+   */
   void moveLeft() {
     velocity.x = -200;
   }
   
+  /**
+   * Starts moving the player down.
+   */
   void moveDown() {
     velocity.y = 80;
   }
   
+  /**
+   * Starts moving the player up.
+   */
   void moveUp() {
     velocity.y = -60;
   }
   
+  /**
+   * Draws the player.
+   */
   void draw() {
     updatePosition();
 
@@ -59,6 +77,9 @@ class Player extends MovingObject {
     image(img, position.x, position.y, size, size);
   }
   
+  /**
+   * Update the player's position and detect hit's with other objects.
+   */
   protected void updatePosition() {
     super.updatePosition();
     
@@ -114,15 +135,26 @@ class Player extends MovingObject {
     }
   }
   
+  /**
+   * Adds a particle of dirt when digging.
+   */
   protected void addDirtParticle() {
     dirtParticles[dirtParticleIndex++] = new DirtParticle(new PVector(position.x + objectWidth/2, position.y + objectHeight/2));
     if (dirtParticleIndex >= dirtParticles.length) dirtParticleIndex = 0;
   }
   
+  /**
+   * Adds a hole to the dirt the player is digging through.
+   */
   protected void addDirtHole(Map.TileReference tile) {
     dirtHoles.add(new DirtHole(tile));
   }
   
+  /**
+   * Returns whether the player is currently digging.
+   *
+   * @return true, if the player is currently digging
+   */
   private boolean isDigging() {
     Map.TileReference currentTile = getCurrentTile();
     boolean isDiggingInDirt = (velocity.x != 0 || velocity.y != 0) && "DGT".indexOf(currentTile.tile) != -1;

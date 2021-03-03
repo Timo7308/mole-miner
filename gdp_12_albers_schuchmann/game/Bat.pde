@@ -16,6 +16,9 @@ class Bat extends Opponent {
     velocity.x = fiftyFifty() ? 70 : -70;
   }
   
+  /**
+   * Draws the bat.
+   */
   void draw() {
     updatePosition();
     

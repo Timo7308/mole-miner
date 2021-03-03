@@ -6,6 +6,9 @@ class FallingTileFilter {
   private PVector[] chaoticFilterStartPositions = new PVector[CHAOTIC_FILTER_ELEMENT_COUNT];
   private PVector[] chaoticFilterTargetPositions = new PVector[CHAOTIC_FILTER_ELEMENT_COUNT];
 
+  /**
+   * Creates a new instance of the filter and initializes it with random positions.
+   */
   FallingTileFilter() {
     for (int i = 0; i < chaoticFilterStartPositions.length; i++) {
       chaoticFilterStartPositions[i] = new PVector(random(width-50), random(height-50));
@@ -16,7 +19,10 @@ class FallingTileFilter {
     }
   }
   
-  void apply() {
+  /**
+   * Applies the filter to the currently drawn image.
+   */
+  void draw() {
     loadPixels();
     
     int size = map.tileSize;
