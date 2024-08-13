@@ -18,5 +18,5 @@ Use the arrow keys to move down, up, left or right.
 #
 **Install**
 
-To play the game the Processing editor is required. After the editor was installed click on of the .pde files to open the editor.
+To play the game the Processing editor is required. After the editor was installed click on one of the .pde files to open the editor.
 Inside the editor click play to start the game. 
