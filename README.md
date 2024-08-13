@@ -1,5 +1,5 @@
-**Mole Miner**
-#
+# Mole Miner
+
 **Overview**
 
 Mole miner is a PC game that was developed with Processing. The player is a little mole that has to dig into the earth. While 
